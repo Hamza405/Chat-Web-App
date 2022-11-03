@@ -1,0 +1,62 @@
+@use "../../mixin.scss" as  mixin;
+
+.formContainer {
+  background-color: mixin.$lightBlue;  
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .formWrapper{
+    background-color: white;
+    padding: 20px 16px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .logo{
+      color: mixin.$primaryColor;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .title{
+      color:  mixin.$primaryColor;
+      font-size: 18px;
+    }
+
+    form{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+
+      input{
+        padding: 15px;
+        border: none;
+        width:250px;
+        border-bottom:1px solid mixin.$lightBlue;
+      }
+
+      button{
+        border:none;
+        background-color: mixin.$secondaryColor;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        width:250px;
+        cursor: pointer;
+      }
+
+      p{
+        color: mixin.$primaryColor;
+        font-size: 12px;
+        margin: 10px;
+        cursor: pointer;
+      }
+      
+    }
+  }
+}
