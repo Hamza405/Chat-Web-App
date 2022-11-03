@@ -1,0 +1,39 @@
+@use "../../mixin.scss" as mixin;
+
+.navBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: mixin.$darkColor;
+    height: 50px;
+    padding: 10px;
+    color: white;
+    
+    .logo{
+        font-weight: bold;
+    }
+
+    .user{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    img{
+        border-color: white;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        object-fit: cover;
+    }
+
+    button{
+        background-color: mixin.$primaryColor;
+        color:white;
+        font-size: 10px;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 5px;
+    }
+}

@@ -1,10 +1,15 @@
 import React from "react";
-import style from "./HomeStyle.scss";
+import SideBar from "../../components/SideBar/SideBar";
+import Chat from "../../components/Chat/Chat";
+import style from "./HomeStyle.module.scss";
 
 const HomePage = () => {
   return (
-    <div className={style.Home}>
-      <div className={style.container}></div>
+    <div className={style.home}>
+      <div className={style.container}>
+        <SideBar />
+        <Chat />
+      </div>
     </div>
   );
 };
