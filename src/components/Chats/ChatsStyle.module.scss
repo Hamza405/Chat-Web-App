@@ -1,0 +1,33 @@
+@use "../../mixin.scss" as mixin;
+
+.chats{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    padding: 10px;
+    gap: 10px;
+
+    
+    img{
+        width:50px;
+        height:50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .info{
+        span{
+            font-size: 18px;
+            font-weight: bold;
+        }
+        p{
+            font-size: 14px;
+            color: lightgray;
+        }
+    }
+
+    &:hover{
+        background-color: mixin.$darkColor;
+    }
+}
