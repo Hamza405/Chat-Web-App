@@ -1,5 +1,7 @@
+@use "../../mixin.scss" as  mixin;
+
 .formContainer {
-  background-color: #a7bcff;  
+  background-color: mixin.$lightBlue;  
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -14,13 +16,13 @@
     justify-content: center;
 
     .logo{
-      color: #5b5d8d;
+      color: mixin.$primaryColor;
       font-size: 24px;
       font-weight: bold;
     }
 
     .title{
-      color: #5b5d8d;
+      color:  mixin.$primaryColor;
       font-size: 18px;
     }
 
@@ -35,12 +37,12 @@
         padding: 15px;
         border: none;
         width:250px;
-        border-bottom:1px solid #a7bcff;
+        border-bottom:1px solid mixin.$lightBlue;
       }
 
       button{
         border:none;
-        background-color: #7b96ec;
+        background-color: mixin.$secondaryColor;
         color: white;
         padding: 10px;
         font-weight: bold;
@@ -49,7 +51,7 @@
       }
 
       p{
-        color: #5b5d8d;
+        color: mixin.$primaryColor;
         font-size: 12px;
         margin: 10px;
         cursor: pointer;
@@ -60,7 +62,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        color: #8da4f1;
+        color: mixin.$secondaryColor;
         font-size: 12px;
         cursor: pointer;
 
