@@ -54,6 +54,21 @@
         margin: 10px;
         cursor: pointer;
       }
+
+      label{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #8da4f1;
+        font-size: 12px;
+        cursor: pointer;
+
+        img{
+          width: 33px;
+        }
+      }
+      
     }
   }
 }

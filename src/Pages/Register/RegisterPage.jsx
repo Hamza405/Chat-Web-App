@@ -1,4 +1,5 @@
 import React from "react";
+import Add from "../../assets/images/addAvatar.png";
 import style from "./RegisterStyle.module.scss";
 
 const RegisterPage = () => {
@@ -11,7 +12,11 @@ const RegisterPage = () => {
           <input type="text" placeholder="Your name" />
           <input type="email" placeholder="Your email" />
           <input type="password" placeholder="Your password" />
-          <input type="file" />
+          <input style={{ display: "none" }} type="file" id="avatar" />
+          <label htmlFor="avatar">
+            <img src={Add} alt="avatar" />
+            <span>Add your avatar</span>
+          </label>
           <button>Sign up</button>
           <p>Do you have an account ? login</p>
         </form>
