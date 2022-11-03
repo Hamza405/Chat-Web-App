@@ -1,5 +1,59 @@
-.formContainer 
-{
+.formContainer {
   background-color: #a7bcff;  
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .formWrapper{
+    background-color: white;
+    padding: 20px 16px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .logo{
+      color: #5b5d8d;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .title{
+      color: #5b5d8d;
+      font-size: 18px;
+    }
+
+    form{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+
+      input{
+        padding: 15px;
+        border: none;
+        width:250px;
+        border-bottom:1px solid #a7bcff;
+      }
+
+      button{
+        border:none;
+        background-color: #7b96ec;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        width:250px;
+        cursor: pointer;
+      }
+
+      p{
+        color: #5b5d8d;
+        font-size: 12px;
+        margin: 10px;
+        cursor: pointer;
+      }
+    }
+  }
 }
