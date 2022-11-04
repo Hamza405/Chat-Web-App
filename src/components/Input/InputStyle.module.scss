@@ -18,4 +18,23 @@
             color: mixin.$darkColor;
         }
     }
+    .send{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        img{
+            height: 25px;
+            cursor: pointer;
+        }
+
+        button{
+            border: none;
+            padding: 10px 15px;
+            color: white ;
+            background-color: mixin.$secondaryColor;
+            border-radius: 10px;
+        }
+    }
 }
