@@ -11,6 +11,9 @@
     
     .logo{
         font-weight: bold;
+        @include mixin.tablet {
+            display: none;
+        }
     }
 
     .user{
@@ -35,5 +38,12 @@
         cursor: pointer;
         padding: 8px;
         border-radius: 5px;
+
+        @include mixin.tablet{
+            position: absolute;
+            bottom: 10px;
+            background-color: mixin.$secondaryColor;
+            padding: 10px 20px;  
+        }
     }
 }

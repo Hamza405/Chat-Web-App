@@ -16,7 +16,7 @@ $lightColor: #ddddf7;
     }
 };
 
-@mixin desktop {
+@mixin laptop {
     @media screen and (max-width:1200px) {
         @content
     }
