@@ -1,3 +1,24 @@
+@use "../../mixin.scss" as mixin;
+
 .chat{
     flex:2;
+
+    .chatInfo{
+        height: 50px;
+        background-color: mixin.$primaryColor;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        color:lightgray;
+
+        .chatInfos{
+            display: flex;
+            gap:10px;
+             img{
+                height:25px;
+                cursor: pointer;
+             }
+        }
+    }
 }
