@@ -1,0 +1,21 @@
+@use "../../mixin.scss" as mixin;
+
+.input{
+    height: 50px;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    input{
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 18px;
+
+        &::placeholder{
+            color: mixin.$darkColor;
+        }
+    }
+}
