@@ -1,5 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { signup } from "../../services/auth-api";
+import { doc, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { db, storage } from "../../services/firebase";
 import Add from "../../assets/images/addAvatar.png";
 import style from "./RegisterStyle.module.scss";
 
@@ -7,14 +10,41 @@ const RegisterPage = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [photo, setPhoto] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const inputData = {
+      name: nameRef.current.value,
       email: emailRef.current.value,
-      passwordRef: passwordRef.current.value,
+      password: passwordRef.current.value,
     };
+
+    try {
+      const res = await signup(inputData);
+
+      if (photo) {
+        try {
+          const photoName = Date.now() + photo.name;
+          const storageRef = ref(storage, `/chat/personalImages/${photoName}`);
+          const uploadedPhoto = await uploadBytesResumable(storageRef, photo);
+          const photoUrl = await getDownloadURL(uploadedPhoto.ref);
+          inputData.photoUrl = photoUrl;
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      await setDoc(doc(db, "users", res.localId), {
+        name: inputData.name,
+        email: inputData.email,
+        photoURL: inputData.photoUrl,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <div className={style.formContainer}>
       <div className={style.formWrapper}>
@@ -28,7 +58,12 @@ const RegisterPage = () => {
             type="password"
             placeholder="Your password"
           />
-          <input style={{ display: "none" }} type="file" id="avatar" />
+          <input
+            onChange={(event) => setPhoto(event.target.files[0])}
+            style={{ display: "none" }}
+            type="file"
+            id="avatar"
+          />
           <label htmlFor="avatar">
             <img src={Add} alt="avatar" />
             <span>Add your avatar</span>
