@@ -5,8 +5,10 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../services/firebase";
 import Add from "../../assets/images/addAvatar.png";
 import style from "./RegisterStyle.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -35,11 +37,16 @@ const RegisterPage = () => {
         }
       }
 
+      // create user
       await setDoc(doc(db, "users", res.localId), {
         name: inputData.name,
         email: inputData.email,
         photoURL: inputData.photoUrl,
       });
+
+      //create user chats
+      await setDoc(doc(db, "userChats", res.localId), {});
+      navigate("/");
     } catch (e) {
       console.log(e);
     }
@@ -69,7 +76,9 @@ const RegisterPage = () => {
             <span>Add your avatar</span>
           </label>
           <button>Sign up</button>
-          <p>Do you have an account ? login</p>
+          <p onClick={() => navigate("/login")}>
+            Do you have an account ? login
+          </p>
         </form>
       </div>
     </div>
