@@ -48,6 +48,7 @@ const RegisterPage = () => {
 
       //create user chats
       await setDoc(doc(db, "userChats", res.localId), {});
+      auth.handleLogin(res);
       navigate("/");
     } catch (e) {
       console.log(e);

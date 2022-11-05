@@ -12,10 +12,11 @@ const AuthContext = createContext({
 export const AuthContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const isAuth = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
 
   const handleLogin = (data) => {
     setUserData(data);
+    setIsAuth(true);
   };
 
   // useEffect(() => {
