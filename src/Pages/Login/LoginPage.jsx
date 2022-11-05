@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/auth-api";
 import AuthContext from "../../store/AuthContext";
@@ -9,6 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [error, setError] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
     const inputData = {
@@ -20,6 +21,7 @@ const LoginPage = () => {
       auth.handleLogin(res);
       navigate("/");
     } catch (e) {
+      setError(e);
       console.log(e);
     }
   };
@@ -39,6 +41,7 @@ const LoginPage = () => {
           <p onClick={() => navigate("/register")}>
             You don't have an account ? Sign up
           </p>
+          {error && <p style={{ color: "red" }}>{error.message}</p>}
         </form>
       </div>
     </div>

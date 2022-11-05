@@ -15,6 +15,7 @@ const RegisterPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [photo, setPhoto] = useState(null);
+  const [error, setError] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +36,7 @@ const RegisterPage = () => {
           const photoUrl = await getDownloadURL(uploadedPhoto.ref);
           inputData.photoUrl = photoUrl;
         } catch (e) {
+          setError(e);
           console.log(e);
         }
       }
@@ -51,6 +53,7 @@ const RegisterPage = () => {
       auth.handleLogin(res);
       navigate("/");
     } catch (e) {
+      setError(e);
       console.log(e);
     }
   };
@@ -82,6 +85,7 @@ const RegisterPage = () => {
           <p onClick={() => navigate("/login")}>
             Do you have an account ? login
           </p>
+          {error && <p style={{ color: "red" }}>{error.message}</p>}
         </form>
       </div>
     </div>

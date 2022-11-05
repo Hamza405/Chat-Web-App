@@ -11,11 +11,8 @@ function App() {
   const ProtectedRoute = ({ children }) => {
     if (!auth.isAuth) {
       return <Navigate to="/login" />;
-    } else {
-      return <Navigate to="/" />;
     }
   };
-  console.log(user);
   return (
     <BrowserRouter>
       <Routes>
