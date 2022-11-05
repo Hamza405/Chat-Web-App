@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { lazy, useContext } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "./Pages/HomePage/HomePage";
-import LoginPage from "./Pages/Login/LoginPage";
-import RegisterPage from "./Pages/Register/RegisterPage";
 import AuthContext from "./store/AuthContext";
+import HomePage from "./Pages/HomePage/HomePage";
+
+const LoginPage = lazy(() => import("./Pages/Login/LoginPage"));
+const RegisterPage = lazy(() => import("./Pages/Register/RegisterPage"));
 
 function App() {
   const auth = useContext(AuthContext);
