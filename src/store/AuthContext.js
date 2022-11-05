@@ -1,6 +1,6 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../services/firebase";
 import { createContext, useEffect, useState } from "react";
+import { db } from "../services/firebase";
+import { getDoc, doc } from "firebase/firestore";
 
 const AuthContext = createContext({
   userData: {},
@@ -14,20 +14,18 @@ export const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({});
   const [isAuth, setIsAuth] = useState(false);
 
-  const handleLogin = (data) => {
-    setUserData(data);
-    setIsAuth(true);
+  const handleLogin = async (data) => {
+    const reference = doc(db, "users", data.localId);
+    try {
+      const userInfo = await getDoc(reference);
+      setUserData(data);
+      setUserInfo(userInfo.data());
+      setIsAuth(true);
+    } catch (e) {
+      console.log(data);
+      throw new Error(data.error.message || "Could not signin!.");
+    }
   };
-
-  // useEffect(() => {
-  //   const sub = onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //     console.log(user);
-  //   });
-  //   return () => {
-  //     sub();
-  //   };
-  // }, []);
 
   const context = {
     userData,

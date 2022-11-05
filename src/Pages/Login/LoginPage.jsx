@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../services/auth-api";
 import AuthContext from "../../store/AuthContext";
 import style from "./LoginStyle.module.scss";
@@ -10,6 +10,7 @@ const LoginPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [error, setError] = useState({});
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const inputData = {
@@ -25,6 +26,7 @@ const LoginPage = () => {
       console.log(e);
     }
   };
+
   return (
     <div className={style.formContainer}>
       <div className={style.formWrapper}>
@@ -39,7 +41,7 @@ const LoginPage = () => {
           />
           <button>Login</button>
           <p onClick={() => navigate("/register")}>
-            You don't have an account ? Sign up
+            You don't have an account ? <Link to="/register">Register</Link>
           </p>
           {error && <p style={{ color: "red" }}>{error.message}</p>}
         </form>

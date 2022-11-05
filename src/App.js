@@ -1,34 +1,45 @@
-import { lazy, useContext } from "react";
+import { useContext, Loading, lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import AuthContext from "./store/AuthContext";
+import LoadingSpinner from "./components/Widgets/LoadingSpinner/LoadingSpinner";
 import HomePage from "./Pages/HomePage/HomePage";
+import AuthContext from "./store/AuthContext";
 
 const LoginPage = lazy(() => import("./Pages/Login/LoginPage"));
 const RegisterPage = lazy(() => import("./Pages/Register/RegisterPage"));
 
 function App() {
-  const auth = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
+
   const ProtectedRoute = ({ children }) => {
-    if (!auth.isAuth) {
+    if (!isAuth) {
       return <Navigate to="/login" />;
     }
+    return children;
   };
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route
-            index
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
-      </Routes>
+      <Suspense
+        fallback={
+          <div className="centered">
+            <LoadingSpinner />
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/">
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

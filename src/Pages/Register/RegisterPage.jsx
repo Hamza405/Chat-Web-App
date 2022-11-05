@@ -5,7 +5,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../services/firebase";
 import Add from "../../assets/images/addAvatar.png";
 import style from "./RegisterStyle.module.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
 
 const RegisterPage = () => {
@@ -42,10 +42,11 @@ const RegisterPage = () => {
       }
 
       // create user
-      const storageRes = await setDoc(doc(db, "users", res.localId), {
+      await setDoc(doc(db, "users", res.localId), {
         name: inputData.name,
         email: inputData.email,
         photoURL: inputData.photoUrl,
+        uid: res.localId,
       });
 
       //create user chats
@@ -82,8 +83,8 @@ const RegisterPage = () => {
             <span>Add your avatar</span>
           </label>
           <button>Sign up</button>
-          <p onClick={() => navigate("/login")}>
-            Do you have an account ? login
+          <p>
+            Do you have an account ? <Link to="/login">Login</Link>
           </p>
           {error && <p style={{ color: "red" }}>{error.message}</p>}
         </form>
