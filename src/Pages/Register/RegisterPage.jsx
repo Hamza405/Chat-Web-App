@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { signup } from "../../services/auth-api";
 import { doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -6,9 +6,11 @@ import { db, storage } from "../../services/firebase";
 import Add from "../../assets/images/addAvatar.png";
 import style from "./RegisterStyle.module.scss";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../store/AuthContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const auth = useContext(AuthContext);
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -38,7 +40,7 @@ const RegisterPage = () => {
       }
 
       // create user
-      await setDoc(doc(db, "users", res.localId), {
+      const storageRes = await setDoc(doc(db, "users", res.localId), {
         name: inputData.name,
         email: inputData.email,
         photoURL: inputData.photoUrl,
