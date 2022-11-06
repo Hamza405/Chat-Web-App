@@ -6,7 +6,8 @@ const AuthContext = createContext({
   userData: {},
   userInfo: {},
   isAuth: false,
-  handleLogin: () => {},
+  handleLogin: (data) => {},
+  handleLogout: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -27,11 +28,18 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const handleLogout = () => {
+    setIsAuth(false);
+    setUserData({});
+    setUserInfo({});
+  };
+
   const context = {
     userData,
     userInfo,
     isAuth,
     handleLogin,
+    handleLogout,
   };
 
   return (

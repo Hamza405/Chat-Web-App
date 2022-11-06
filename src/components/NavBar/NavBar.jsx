@@ -1,7 +1,10 @@
 import React from "react";
+import { useContext } from "react";
+import AuthContext from "../../store/AuthContext";
 import style from "./NavBarStyle.module.scss";
 
 const NavBar = () => {
+  const { handleLogout } = useContext(AuthContext);
   return (
     <div className={style.navBar}>
       <span className={style.logo}>Chat App</span>
@@ -11,7 +14,7 @@ const NavBar = () => {
           alt="nav"
         />
         <span>Hamza</span>
-        <button>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );
