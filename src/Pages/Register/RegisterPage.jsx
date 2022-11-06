@@ -15,6 +15,7 @@ const RegisterPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
 
   const handleSubmit = async (e) => {
@@ -24,10 +25,9 @@ const RegisterPage = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
-
+    setLoading(true);
     try {
       const res = await signup(inputData);
-
       if (photo) {
         try {
           const photoName = Date.now() + photo.name;
@@ -37,6 +37,7 @@ const RegisterPage = () => {
           inputData.photoUrl = photoUrl;
         } catch (e) {
           setError(e);
+          setLoading(false);
           console.log(e);
         }
       }
@@ -53,8 +54,10 @@ const RegisterPage = () => {
       await setDoc(doc(db, "userChats", res.localId), {});
       auth.handleLogin(res);
       navigate("/");
+      setLoading(false);
     } catch (e) {
       setError(e);
+      setLoading(false);
       console.log(e);
     }
   };
@@ -82,7 +85,7 @@ const RegisterPage = () => {
             <img src={Add} alt="avatar" />
             <span>Add your avatar</span>
           </label>
-          <button>Sign up</button>
+          <button>{loading ? "Loading..." : "Sign up"}</button>
           <p>
             Do you have an account ? <Link to="/login">Login</Link>
           </p>

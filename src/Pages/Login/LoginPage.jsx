@@ -9,6 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
 
   const handleSubmit = async (e) => {
@@ -17,12 +18,15 @@ const LoginPage = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
+    setLoading(true);
     try {
       const res = await login(inputData);
-      auth.handleLogin(res);
+      await auth.handleLogin(res);
       navigate("/");
+      setLoading(false);
     } catch (e) {
       setError(e);
+      setLoading(false);
       console.log(e);
     }
   };
@@ -39,7 +43,7 @@ const LoginPage = () => {
             type="password"
             placeholder="Your password"
           />
-          <button>Login</button>
+          <button>{loading ? "Loading..." : "Login"}</button>
           <p onClick={() => navigate("/register")}>
             You don't have an account ? <Link to="/register">Register</Link>
           </p>

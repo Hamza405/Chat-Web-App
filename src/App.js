@@ -9,7 +9,6 @@ const RegisterPage = lazy(() => import("./Pages/Register/RegisterPage"));
 
 function App() {
   const { isAuth } = useContext(AuthContext);
-
   const ProtectedRoute = ({ children }) => {
     if (!isAuth) {
       return <Navigate to="/login" />;
