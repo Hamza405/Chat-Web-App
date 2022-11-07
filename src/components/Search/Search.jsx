@@ -2,38 +2,80 @@ import React, { useState } from "react";
 import {
   collection,
   getDocs,
+  getDoc,
   startAt,
   query,
   endAt,
   orderBy,
+  doc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import AuthContext from "../../store/AuthContext";
 import style from "../Search/SearchStyle.module.scss";
+import { useContext } from "react";
 
 const Search = () => {
+  const { userInfo } = useContext(AuthContext);
   const [userName, setUserName] = useState("");
-  const [user, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState({});
   const [error, setError] = useState(false);
 
   const handleSearch = async () => {
-    let s = query(
+    let q = query(
       collection(db, "users"),
       orderBy("name"),
       startAt(userName),
       endAt(userName + "\uf8ff")
     );
     try {
-      const querySnapshot = await getDocs(s);
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        setUser((prev) => [...prev, doc.data()]);
+        if (userInfo.uid !== doc.data().uid) {
+          setUsers((prev) => [...prev, doc.data()]);
+        }
       });
     } catch (e) {
       setError(true);
     }
   };
 
+  const handleSelect = async (user) => {
+    // create a chat chats collection
+    const combId =
+      userInfo.uid > user.uid
+        ? userInfo.uid + user.uid
+        : user.uid + userInfo.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", combId));
+      if (!res.exists()) {
+        await setDoc(doc(db, "chats", combId), { messages: [] });
+
+        //create user chat
+        await updateDoc(doc(db, "userChats", userInfo.uid), {
+          [combId + ".userInfo"]: {
+            ...user,
+          },
+          [combId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combId + ".userInfo"]: {
+            ...userInfo,
+          },
+          [combId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleKey = (e) => {
-    if ((userName !== "") & (user.length === 0)) {
+    if ((userName !== "") & (users.length === 0)) {
       handleSearch();
     }
   };
@@ -46,15 +88,21 @@ const Search = () => {
           placeholder="Find a user"
           onChange={(e) => {
             setUserName(e.target.value);
-            setUser([]);
+            setUsers([]);
           }}
           onKeyUp={handleKey}
         />
       </div>
       {error && <span>User Not Found</span>}
-      {user.length > 0 &&
-        user.map((u) => (
-          <div key={u.uid} className={style.chat}>
+      {users.length > 0 &&
+        users.map((u) => (
+          <div
+            key={u.uid}
+            className={style.chat}
+            onClick={() => {
+              handleSelect(u);
+            }}
+          >
             <img src={u.photoURL} alt={u.name} />
             <div className={style.info}>
               <span>{u.name}</span>
