@@ -72,6 +72,8 @@ const Search = () => {
     } catch (e) {
       console.log(e);
     }
+    setUsers([]);
+    setUserName("");
   };
 
   const handleKey = (e) => {
@@ -91,6 +93,7 @@ const Search = () => {
             setUsers([]);
           }}
           onKeyUp={handleKey}
+          value={userName}
         />
       </div>
       {error && <span>User Not Found</span>}
